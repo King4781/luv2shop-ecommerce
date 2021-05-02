@@ -1,0 +1,70 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+        <div *ngFor="let product of products" class="col-md-3">
+          <div class="product-box">
+            <a routerLink="/products/{{ product.id }}">
+              <img
+                src="{{ product.imageUrl }}"
+                alt="Product Image"
+                class="img-responsive"
+              />
+            </a>
+            <a routerLink="/products/{{ product.id }}">
+              <h1>{{ product.name }}</h1>
+            </a>
+            <div class="price">{{ product.unitPrice | currency: "USD" }}</div>
+            <button (click)="addToCart(product)" class="primary-btn">
+              Add to cart
+            </button>
+          </div>
+        </div>
+
+        <div
+          *ngIf="products?.length === 0"
+          class="alert alert-warning col-md-12"
+          role="alert"
+        >
+          <h3 *ngIf="!loading">No Products Found</h3>
+          <h3 *ngIf="loading">Loading Products</h3>
+        </div>
+      </div>
+
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+
+          <div class="col-md-6">
+            <div class="row">
+              <div>
+                <ngb-pagination
+                  [(page)]="pageNumber"
+                  [pageSize]="pageSize"
+                  [collectionSize]="totalElements"
+                  [maxSize]="5"
+                  (pageChange)="listProducts()"
+                >
+                </ngb-pagination>
+              </div>
+              <div>
+                <div class="items d-flex flex-column ml-5">
+                  <select
+                    id="itemsPerPage"
+                    (change)="updatePageSize($event.target)"
+                  >
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                  </select>
+                  <label for="itemsPerPage">Items per page</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
