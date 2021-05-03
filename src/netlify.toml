@@ -4,4 +4,4 @@
   status = 200
 
 [functions]
-  functions = 'functions'
+  directory = "functions"
