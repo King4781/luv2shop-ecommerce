@@ -12,7 +12,6 @@ import { User } from 'src/app/common/user';
 export class LoginStatusComponent implements OnInit {
 
   isAuthenticated: boolean = false;
-  userFullName!: string;
   user!: User|null;
 
   constructor() { }

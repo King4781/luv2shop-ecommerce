@@ -1,6 +1,9 @@
 <div class="login-status-header">
-  <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
-    Welcome back {{ userFullName }}
+  <div
+    *ngIf="isAuthenticated && user"
+    class="login-status-user-info text-white"
+  >
+    Welcome back {{ user.name }}
   </div>
 
   <button
@@ -11,10 +14,6 @@
   >
     Login / Sign Up
   </button>
-
-  <p *ngIf="isAuthenticated" class="mr-5 mt-2 text-white">
-    Hello {{ user!.name }}
-  </p>
 
   <button
     (click)="logout()"
