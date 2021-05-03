@@ -1,7 +1,9 @@
+[build]
+  publish = "dist/angular-ecommerce"
+  command = "ng build --prod"
++  functions = "./src/assets/functions"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  directory = "functions"
