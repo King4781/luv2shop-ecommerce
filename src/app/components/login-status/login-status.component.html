@@ -5,14 +5,23 @@
 
   <button
     *ngIf="!isAuthenticated"
-    routerLink="/login"
+    class="security-btn"
+    type="button"
+    (click)="login()"
+  >
+    Login / Sign Up
+  </button>
+
+  <p *ngIf="isAuthenticated" class="mr-5 mt-2 text-white">
+    Hello {{ user!.name }}
+  </p>
+
+  <button
+    (click)="logout()"
+    *ngIf="isAuthenticated"
     class="security-btn"
     type="button"
   >
-    Login
-  </button>
-
-  <button *ngIf="isAuthenticated" class="security-btn" type="button">
     Logout
   </button>
 </div>
