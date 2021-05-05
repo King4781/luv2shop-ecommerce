@@ -4,18 +4,18 @@ exports.handler = async (event, context) => {
 
     if (context.clientContext.user) {
 
-        const userEmail = { email: context.clientContext.user.app_metadata.email };
+        const user = { email: context.clientContext.user.email, isAuthenticated: true };
 
         return {
             statusCode: 200,
-            body: JSON.stringify(userEmail)
+            body: JSON.stringify(user)
         }
 
     } 
 
     return {
         statusCode: 401,
-        body: JSON.stringify({ msg: "You must be logged in to view orders." })
+        body: JSON.stringify({ msg: "You must be logged in to view orders.", isAuthenticated: false })
     }
 
 }

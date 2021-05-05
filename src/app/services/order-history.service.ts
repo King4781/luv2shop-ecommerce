@@ -18,13 +18,8 @@ export class OrderHistoryService {
     return this.httpClient.get<OrderHistory[]>(ordersUrl);
   }
 
-  getOrders(): Observable<GetResponseOrderHistory> {
-    return this.httpClient.get<GetResponseOrderHistory>(this.netlifyOrdersUrl);
+  getOrders(): Observable<any> {
+    return this.httpClient.get<any>(this.netlifyOrdersUrl);
   }
-}
 
-interface GetResponseOrderHistory {
-  _embedded: {
-    orders: OrderHistory[]
-  }
 }
