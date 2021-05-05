@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 //@ts-ignore
 import netlifyIdentity from "netlify-identity-widget";
-import { Token } from 'src/app/common/token';
 import { User } from 'src/app/common/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login-status',
@@ -13,37 +14,52 @@ export class LoginStatusComponent implements OnInit {
 
   isAuthenticated: boolean = false;
   user!: User|null;
+  storage: Storage = sessionStorage;
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
 
+    this.subscrbieToAuthValues();
+
     netlifyIdentity.on('login', (user: any) => {
-      this.user = this.createUser(user);
-      this.isAuthenticated = true;
+      this.handleUser(user);
       netlifyIdentity.close();
-      console.log(this.user);
     })
 
     netlifyIdentity.on('logout', () => {
-      this.user = null;
-      this.isAuthenticated = false;
+      this.authService.setUser(null);
+      this.authService.setIsAuthenticated(false);
+      this.router.navigateByUrl("/");
+    })
+
+    netlifyIdentity.on('init', (user: any) => {
+      this.handleUser(user);
     })
 
     netlifyIdentity.init();
+
   }
 
-  createUser(user: any): User {
-    const id:string = user.id;
-    const email:string = user.email
-    const name:string = user.user_metadata.full_name;
-    const accessToken:string = user.token.access_token;
-    const refreshToken:string = user.token.refresh_token;
-    const tokenType:string = user.token.token_type;
-    const expiresAt:number = user.token.expires_at;
-    const expiresIn:number = user.token.expires_in;
-    const token:Token = new Token(accessToken, expiresAt, expiresIn, refreshToken, tokenType);
-    return new User(id, email, name, token);
+  handleUser(user:any) {
+    if (user === null) {
+      this.authService.setUser(null);
+      this.authService.setIsAuthenticated(false);
+    } else {
+      this.authService.setUser(user);
+      this.authService.setIsAuthenticated(true);
+      this.storage.setItem("userEmail", JSON.stringify(this.user?.email));
+    }
+  }
+
+  subscrbieToAuthValues() {
+    this.authService.isAuthenticated.subscribe(auth => {
+      this.isAuthenticated = auth;
+    })
+
+    this.authService.user.subscribe(user => {
+      this.user = user;
+    })
   }
 
   login() {

@@ -16,11 +16,13 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { httpInterceptorProviders } from './http-interceptors';
+import { OrdersComponent } from './components/orders/orders.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent },
+  { path: "orders", component: OrdersComponent, canActivate: [AuthGuard] },
   { path: "checkout", component: CheckoutComponent },
   { path: "cart-details", component: CartDetailsComponent },
   { path: "products/:id", component: ProductDetailsComponent },
@@ -41,8 +43,8 @@ const routes: Routes = [
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    LoginComponent,
-    LoginStatusComponent
+    LoginStatusComponent,
+    OrdersComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -51,7 +53,7 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, AuthGuard, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
