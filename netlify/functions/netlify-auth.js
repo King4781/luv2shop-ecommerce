@@ -4,9 +4,11 @@ exports.handler = async (event, context) => {
 
     if (context.clientContext.user) {
 
+        const userEmail = { email: context.clientContext.user.app_metadata.email };
+
         return {
             statusCode: 200,
-            body: JSON.stringify(context.clientContext.user)
+            body: JSON.stringify(userEmail)
         }
 
     } 
