@@ -2,6 +2,14 @@
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <div class="row">
+        <div
+          *ngIf="checkoutSuccess"
+          class="alert alert-success col-md-12 my-3"
+          role="alert"
+        >
+          <h3>Your check was successfully. Thank you!</h3>
+        </div>
+
         <div *ngFor="let product of products" class="col-md-3">
           <div class="product-box">
             <a routerLink="/products/{{ product.id }}">

@@ -2,6 +2,13 @@
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <div
+        *ngIf="checkoutFailed"
+        class="alert alert-warning col-md-12"
+        role="alert"
+      >
+        <h3>Your checkout was canceled.</h3>
+      </div>
+      <div
         *ngIf="cartItems.length === 0"
         class="alert alert-warning col-md-12"
         role="alert"
@@ -70,7 +77,21 @@
             <p>Shipping FREE</p>
             <b>Total Price: {{ totalPrice | currency: "USD" }}</b
             ><br />
-            <a routerLink="/checkout" class="primary-btn mt-3">Checkout</a>
+            <a
+              *ngIf="isAuthenticated"
+              routerLink="/checkout"
+              class="primary-btn mt-3"
+              >Proceed Checkout</a
+            >
+            <button
+              *ngIf="!isAuthenticated"
+              [disabled]="loading"
+              class="primary-btn mt-3"
+              id="checkout-button"
+              (click)="checkout()"
+            >
+              {{ loading ? "Please wait" : "Checkout as Guest" }}
+            </button>
           </td>
         </tr>
       </table>

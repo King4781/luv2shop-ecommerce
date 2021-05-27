@@ -6,7 +6,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 
-import { Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
@@ -22,15 +22,15 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: "orders", component: OrdersComponent, canActivate: [AuthGuard] },
-  { path: "checkout", component: CheckoutComponent },
-  { path: "cart-details", component: CartDetailsComponent },
-  { path: "products/:id", component: ProductDetailsComponent },
-  { path: "search/:keyword", component: ProductListComponent },
-  { path: "category/:id", component: ProductListComponent },
-  { path: "category", component: ProductListComponent },
-  { path: "", redirectTo: "/category/1", pathMatch: "full" },
-  { path: "**", redirectTo: "/category/1", pathMatch: "full" }
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'cart-details', component: CartDetailsComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'search/:keyword', component: ProductListComponent },
+  { path: 'category/:id', component: ProductListComponent },
+  { path: 'category', component: ProductListComponent },
+  { path: '', redirectTo: '/category/1', pathMatch: 'full' },
+  { path: '**', redirectTo: '/category/1', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -44,16 +44,16 @@ const routes: Routes = [
     CartDetailsComponent,
     CheckoutComponent,
     LoginStatusComponent,
-    OrdersComponent
+    OrdersComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [ProductService, AuthGuard, httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

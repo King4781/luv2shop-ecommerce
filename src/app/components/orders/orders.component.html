@@ -21,12 +21,25 @@
         </table>
       </div>
 
+      <div *ngIf="loading" class="alert alert-warning col-md-12" role="alert">
+        <h3>Loading orders. Please wait...</h3>
+      </div>
+
       <div
-        *ngIf="orders.length == 0"
+        *ngIf="orders.length == 0 && errorMsg.length == 0 && !loading"
         class="alert alert-warning col-md-12"
         role="alert"
       >
         <h3>No orders found.</h3>
+      </div>
+
+      <div
+        *ngIf="orders.length == 0 && errorMsg.length > 0 && !loading"
+        class="alert alert-danger col-md-12"
+        role="alert"
+      >
+        <h3>{{ errorMsg }}</h3>
+        <p>Log out and log back in if your browser has been idle for awhile.</p>
       </div>
     </div>
   </div>

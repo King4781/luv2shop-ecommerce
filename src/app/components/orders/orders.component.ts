@@ -11,21 +11,25 @@ export class OrdersComponent implements OnInit {
 
   orders: Array<OrderHistory> = [];
   storage: Storage = sessionStorage;
+  errorMsg: string = "";
+  loading:boolean = false;
+  
 
   constructor(private orderHistoryService:OrderHistoryService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.handleOrderHistory();
+    this.orderHistoryService.errorMsg.subscribe(errMessage => {
+      this.errorMsg = errMessage;
+      this.loading = false;
+    })
   }
 
   handleOrderHistory() {
-    let email = "";
-    let value = sessionStorage.getItem("userEmail");
-
-    if (value != null) email = JSON.parse(value);
-
-    this.orderHistoryService.getOrderHistory(email).subscribe(orders => {
+    this.orderHistoryService.getOrderHistory().subscribe(orders => {
       this.orders = orders;
+      this.loading = false;
     })
   }
 
