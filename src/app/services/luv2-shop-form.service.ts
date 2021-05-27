@@ -9,8 +9,8 @@ import { State } from '../common/state';
   providedIn: 'root',
 })
 export class Luv2ShopFormService {
-  private countriesUrl = environment.base_url + '/countries';
-  private statesUrl = environment.base_url + '/states';
+  private countriesUrl = environment.API_URL + '/countries';
+  private statesUrl = environment.API_URL + '/states';
 
   constructor(private httpClient: HttpClient) {}
 

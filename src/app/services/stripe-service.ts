@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { loadStripe } from '@stripe/stripe-js';
 import { BehaviorSubject } from 'rxjs';
-import { STRIPE_KEY } from 'stripe_key';
+import { environment } from 'src/environments/environment';
 import { Purchase } from '../common/purchase';
 import { CheckoutService } from './checkout.service';
 
@@ -9,7 +9,9 @@ import { CheckoutService } from './checkout.service';
   providedIn: 'root',
 })
 export class StripeService {
-  private stripePromise = loadStripe(STRIPE_KEY);
+  private stripePromise = loadStripe(
+    environment.STRIPE_KEY ? environment.STRIPE_KEY : ''
+  );
   loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private checkoutService: CheckoutService) {}

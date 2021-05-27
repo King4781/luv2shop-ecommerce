@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "config": "ts-node ./scripts/setenv.ts",
+    "start": "npm run config -- --environment=dev && ng serve",
+    "build": "npm run config -- --environment=prod && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,6 +26,7 @@
     "@stripe/stripe-js": "^1.14.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "dotenv": "^10.0.0",
     "netlify-identity-widget": "^1.9.1",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.7",

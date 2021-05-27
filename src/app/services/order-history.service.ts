@@ -9,7 +9,7 @@ import { OrderHistory } from '../common/order-history';
   providedIn: 'root',
 })
 export class OrderHistoryService {
-  private ordersUrl: string = environment.base_url + '/orders/findByEmail';
+  private ordersUrl: string = environment.API_URL + '/orders/findByEmail';
   errorMsg: Subject<string> = new Subject<string>();
 
   constructor(private httpClient: HttpClient) {}
