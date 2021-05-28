@@ -14,8 +14,6 @@ const targetPath = isProduction
   ? `./src/environments/environment.prod.ts`
   : `./src/environments/environment.ts`;
 
-const stripeKeyTargetPath = `./src/stripe/stripe_key.ts`;
-
 const API_URL = isProduction
   ? 'http://http://167.71.102.222:8080/spring-boot-ecommerce/api'
   : 'http://localhost:8080/api';
@@ -25,14 +23,10 @@ const environmentFileContent = `
 export const environment = {
    production: ${isProduction},
    API_URL: "${API_URL}",
+   STRIPE_KEY: "${process.env.STRIPE_KEY}"
 };
 `;
 
-const stripeFileContent = `
-export const STRIPE = {
-   KEY: "${process.env.STRIPE_KEY}"
-};
-`;
 // write the content to the respective file
 writeFile(targetPath, environmentFileContent, function (err: any) {
   if (err) {
@@ -40,15 +34,3 @@ writeFile(targetPath, environmentFileContent, function (err: any) {
   }
   console.log(`Wrote variables to ${targetPath}`);
 });
-
-writeFile(
-  stripeKeyTargetPath,
-  stripeFileContent,
-  { flag: 'w' },
-  function (err: any) {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`Wrote variables to ${stripeKeyTargetPath}`);
-  }
-);
