@@ -41,9 +41,14 @@ writeFile(targetPath, environmentFileContent, function (err: any) {
   console.log(`Wrote variables to ${targetPath}`);
 });
 
-writeFile(stripeKeyTargetPath, stripeFileContent, function (err: any) {
-  if (err) {
-    console.log(err);
+writeFile(
+  stripeKeyTargetPath,
+  stripeFileContent,
+  { flag: 'w' },
+  function (err: any) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(`Wrote variables to ${stripeKeyTargetPath}`);
   }
-  console.log(`Wrote variables to ${stripeKeyTargetPath}`);
-});
+);
