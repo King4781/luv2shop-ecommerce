@@ -2,9 +2,8 @@ const { writeFile } = require('fs');
 const { argv } = require('yargs');
 // read environment variables from .env file
 require('dotenv').config();
-// read the command line arguments passed with yargs
-const environment = argv.environment;
-const isProduction = environment === 'prod';
+// read the context variable from netlify
+const isProduction = process.env.CONTEXT === 'production';
 
 if (!process.env.STRIPE_KEY) {
   console.error('All the required environment variables were not provided!');
@@ -15,6 +14,8 @@ const targetPath = isProduction
   ? `./src/environments/environment.prod.ts`
   : `./src/environments/environment.ts`;
 
+const stripeKeyTargetPath = `./src/stripe/stripe_key.ts`;
+
 const API_URL = isProduction
   ? 'http://http://167.71.102.222:8080/spring-boot-ecommerce/api'
   : 'http://localhost:8080/api';
@@ -24,7 +25,12 @@ const environmentFileContent = `
 export const environment = {
    production: ${isProduction},
    API_URL: "${API_URL}",
-   STRIPE_KEY: "${process.env.STRIPE_KEY}"
+};
+`;
+
+const stripeFileContent = `
+export const STRIPE = {
+   KEY: "${process.env.STRIPE_KEY}"
 };
 `;
 // write the content to the respective file
@@ -33,4 +39,11 @@ writeFile(targetPath, environmentFileContent, function (err: any) {
     console.log(err);
   }
   console.log(`Wrote variables to ${targetPath}`);
+});
+
+writeFile(stripeKeyTargetPath, stripeFileContent, function (err: any) {
+  if (err) {
+    console.log(err);
+  }
+  console.log(`Wrote variables to ${stripeKeyTargetPath}`);
 });
